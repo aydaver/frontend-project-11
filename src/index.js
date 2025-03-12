@@ -14,7 +14,7 @@ export default document.addEventListener('DOMContentLoaded', function() {
         const obj = { url: input.value };
         scheme.isValid(obj).then((result) => {
             inputBorder(result, input);
-            console.log(rssGet(getProxy(`${input.value}`)));
+            console.log(getNewPost(getProxy(`${input.value}`)));
         });
     });
 
