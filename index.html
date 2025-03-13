@@ -12,7 +12,20 @@
         <input placeholder="Ссылка RSS" type="text" id="url">
         <button type="submit" id="add-item">Добавить</button>
     </form>
-    <h4>Пример: https://lorem-rss.hexlet.app/feed</h4>
+    <h4 id="underMassage">Пример: https://lorem-rss.hexlet.app/feed</h4>
+    <h1 id="postsTitle" style="display: none">Посты</h1>
+    <ul style="list-style-type: none;" id="postList">
+
+    </ul>
+    <div style="display: none;" id="modal" class="modal">
+        <div class="modal-content">
+          <p id="descriptionContent"></p>
+          <form id="seeMore">
+            <button type="submit">Читать полностью</button>
+          </form>
+          <button class="close">Закрыть</button>
+        </div>
+      </div>
     <script src="./src/index.js"></script>
 </body>
 </html>
