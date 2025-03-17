@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 import axios from 'axios';
 import parseToDoc from './parser.js';
-import { addListToPage, validate, connectionErrorView } from './view.js';
+import { addListToPage, validate, addNewItemToPage } from './view.js';
 
 export default document.addEventListener('DOMContentLoaded', function() {
     const scheme = yup.object({
@@ -10,6 +10,8 @@ export default document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('form');
     const input = document.querySelector('input');
 
+    const rssArray = [];
+
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         const obj = { url: input.value };
@@ -17,13 +19,13 @@ export default document.addEventListener('DOMContentLoaded', function() {
             .then((result) => {
                 validate(result, input);
             });
-        getNewPost(getProxy(`${input.value}`))
+            console.log(rssArray);
+            getNewPost(getProxy(input.value))
             .then((response) => {
                 const doc = parseToDoc(response.data.contents);
                 const items = doc.querySelectorAll('item');
-                items.forEach((item, index) => {
-                    item.id = index;
-                });
+                const itemArray = [];
+                console.log(items);
                 const titles = doc.querySelectorAll('title');
                 titles.forEach((titleItem) => {
                     titleItem.id = `title${titleItem.parentElement.id}`;
@@ -37,7 +39,6 @@ export default document.addEventListener('DOMContentLoaded', function() {
                     linkItem.id = `link${linkItem.parentElement.id}`
                 });
                 console.log(titles, descriptions, links);
-                console.log(response.data.status.error)
                 if (response.data.status.error !== undefined) {
                     const error = response.data.status.error.name;
                     const p = document.getElementById('underMassage');
@@ -55,9 +56,22 @@ export default document.addEventListener('DOMContentLoaded', function() {
                     postsTitle.style.display = 'block';
                 }
                 const postList = document.getElementById('postList');
-                addListToPage(doc, postList);
-                
+                if (rssArray.includes(input.value)) {
+                    const p = document.getElementById('underMassage');
+                    p.textContent = `RSS уже добавлен!`;
+                    p.style.color = 'red';
+                    checkForUpdate(input.value, itemArray);
+                } else if (!rssArray.includes(input.value)) {
+                    items.forEach((item, index) => {
+                        item.id = index;
+                        itemArray.push(item);
+                    });
+                    addListToPage(doc, postList);
+                    rssArray.push(input.value);
+                    checkForUpdate(input.value, itemArray);
+                }
             })
+        console.log(rssArray);
     });
 });
 
@@ -71,3 +85,51 @@ const getProxy = (url) => {
 const getNewPost = (url) => {
     return axios.get(url);
 };
+
+const checkForUpdate = (url, itemArray) => {
+    setTimeout(() =>
+    getNewPost(getProxy(url))
+    .then((response) => {
+        const newDoc = parseToDoc(response.data.contents);
+        const newItems = newDoc.querySelectorAll('item');
+        const newTitles = newDoc.querySelectorAll('title');
+        newTitles.forEach((titleItem) => {
+            titleItem.id = `title${titleItem.parentElement.id}`;
+        });
+        const newDescriptions = newDoc.querySelectorAll('description');
+        newDescriptions.forEach((descriptionItem) => {
+            descriptionItem.id = `description${descriptionItem.parentElement.id}`;
+        });
+        const newLinks = newDoc.querySelectorAll('link');
+        newLinks.forEach((linkItem) => {
+            linkItem.id = `link${linkItem.parentElement.id}`
+        });
+        const resultArr = [];
+        newItems.forEach((item) => {
+            itemArray.forEach((arrayItem) => {
+                if (item.firstChild.textContent === arrayItem.firstChild.textContent) {
+                    resultArr.push(true);
+                } else {
+                    resultArr.push(false);
+                }
+            })
+        })
+        let i = 0;
+        resultArr.forEach((element) => {
+            if (element === true) {
+                i += 1;
+            }
+        })
+        const newList = newDoc.createElement('div');
+        const postList = document.getElementById('postList'); 
+        if (i < itemArray.length) {
+            const newestItem = newItems[0];
+            itemArray.splice(9, 1);
+            itemArray.unshift(newestItem);
+            newList.append(newestItem);
+            addNewItemToPage(newList.firstChild, postList);
+        }
+        checkForUpdate(url, itemArray);
+    }), 
+    5000 )
+}
