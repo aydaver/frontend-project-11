@@ -16,12 +16,13 @@
     </form>
     <h4 id="underMessage" class="under-message">Пример: https://lorem-rss.hexlet.app/feed</h4>
   </div>
+  <div class="footer">
+    <div class="posts">
+      <h4 id="postsTitle" class="post-title" style="display: none">Посты</h4>
+      <ul style="list-style-type: none;" id="postList" class="post-list">
 
-    <h1 id="postsTitle" style="display: none">Посты</h1>
-    <ul style="list-style-type: none;" id="postList">
-
-    </ul>
-    <div style="display: none;" id="modal" class="modal">
+      </ul>
+      <div style="display: none;" id="modal" class="modal">
         <div class="modal-content">
           <div class="modal-header">
             <h5 id="titleContent"></h5>
@@ -37,6 +38,14 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="feeds" id="feedsTitle" style="display: none;">
+      <h4 class="feeds-title">Фиды</h4>
+      <ul id="feedsList" class="feeds-list">
+
+      </ul>
+    </div>
+  </div>
     <script src="./src/index.js"></script>
 </body>
 </html>

@@ -48,8 +48,7 @@ const addListToPage = (doc, container) => {
   items = items.reverse();
   items.forEach((item) => {
     const element = document.createElement('li');
-    element.style.fontSize = '22px';
-    element.style.marginTop = '40px';
+    element.classList.add('post');
     const a = document.createElement('a');
     a.href = item.querySelector('link').textContent;
     a.textContent = item.querySelector('title').textContent;
@@ -76,12 +75,11 @@ const addListToPage = (doc, container) => {
 
 const addNewItemToPage = (item, container) => {
   const element = document.createElement('li');
+  element.classList.add('post');
   element.id = `item${item.id}`;
-  element.style.fontSize = '22px';
-  element.style.marginTop = '40px';
   const a = document.createElement('a');
-  a.href = item.children[2].textContent;
-  a.textContent = item.firstChild.textContent;
+  a.href = item.querySelector('link').textContent;
+  a.textContent = item.querySelector('title').textContent;
   element.append(a);
   const button = document.createElement('button');
   button.id = `openModal${item.id}`;
@@ -93,10 +91,31 @@ const addNewItemToPage = (item, container) => {
   const description = item.querySelector('description');
   const link = item.querySelector('link');
   const title = item.querySelector('title');
+  a.classList.add('fw-bold');
   button.addEventListener('click', () => {
     modalWindow(title.textContent, description.textContent, link.textContent);
+    a.classList.add('fw-normal');
+    a.classList.remove('fw-bold');
   });
   container.insertBefore(element, container.firstChild);
 };
 
-export { validate, addListToPage, addNewItemToPage };
+const createFeed = (titles, descriptions) => {
+  const feedsList = document.getElementById('feedsList');
+  const feed = document.createElement('li');
+  const feedTitle = document.createElement('p');
+  const feedDescription = document.createElement('p');
+  feedTitle.textContent = titles[0].textContent;
+  feedTitle.classList.add('feed-title');
+  feedDescription.textContent = descriptions[0].textContent;
+  feedDescription.classList.add('feed-description');
+  feed.append(feedTitle, feedDescription);
+  feedsList.prepend(feed);
+};
+
+export {
+  validate,
+  addListToPage,
+  addNewItemToPage,
+  createFeed,
+};

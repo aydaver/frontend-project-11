@@ -2,7 +2,12 @@
 import * as yup from 'yup';
 import axios from 'axios';
 import parseToDoc from './parser.js';
-import { addListToPage, validate, addNewItemToPage } from './view.js';
+import {
+  addListToPage,
+  validate,
+  addNewItemToPage,
+  createFeed,
+} from './view.js';
 import messages from './locales/ru.js';
 
 const getProxy = (url) => {
@@ -79,13 +84,11 @@ export default document.addEventListener('DOMContentLoaded', () => {
       .then((result) => {
         validate(result, input);
       });
-    console.log(rssArray);
     getNewPost(getProxy(input.value))
       .then((response) => {
         const doc = parseToDoc(response.data.contents);
         const items = doc.querySelectorAll('item');
         const itemArray = [];
-        console.log(items);
         const titles = doc.querySelectorAll('title');
         titles.forEach((titleItem) => {
           titleItem.id = `title${titleItem.parentElement.id}`;
@@ -98,7 +101,6 @@ export default document.addEventListener('DOMContentLoaded', () => {
         links.forEach((linkItem) => {
           linkItem.id = `link${linkItem.parentElement.id}`;
         });
-        console.log(titles, descriptions, links);
         if (response.data.status.error !== undefined) {
           const error = response.data.status.error.name;
           const p = document.getElementById('underMessage');
@@ -106,13 +108,15 @@ export default document.addEventListener('DOMContentLoaded', () => {
           p.style.color = 'red';
           setTimeout(() => {
             p.textContent = messages.exampleUrl;
-            p.style.color = 'black';
+            p.style.color = 'white';
           }, 5000);
         } else {
           const p = document.getElementById('underMessage');
           const postsTitle = document.getElementById('postsTitle');
+          const feedsTitle = document.getElementById('feedsTitle');
           p.textContent = messages.successAdd;
           p.style.color = 'green';
+          feedsTitle.style.display = 'block';
           postsTitle.style.display = 'block';
         }
         const postList = document.getElementById('postList');
@@ -129,8 +133,8 @@ export default document.addEventListener('DOMContentLoaded', () => {
           addListToPage(doc, postList);
           rssArray.push(input.value);
           checkForUpdate(input.value, itemArray);
+          createFeed(titles, descriptions);
         }
       });
-    console.log(rssArray);
   });
 });
