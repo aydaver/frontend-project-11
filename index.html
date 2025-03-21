@@ -4,27 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Создание RSS потока</title>
+    <link rel="stylesheet" href="./src/styles.scss">
 </head>
 <body>
-    <h1>RSS агрегатор</h1>
-    <h4>Начните читать RSS сегодня! Это легко, это красиво.</h4>
-    <form id="form">
-        <input placeholder="Ссылка RSS" type="text" id="url">
-        <button type="submit" id="add-item">Добавить</button>
+  <div class="header">
+    <h1 class="main-title">RSS агрегатор</h1>
+    <h4 class="main-description">Начните читать RSS сегодня! Это легко, это красиво.</h4>
+    <form id="form" class="main-form">
+        <input class="form-control w-100" placeholder="Ссылка RSS" type="text" id="url">
+        <button class="add-btn btn" type="submit" id="add-item">Добавить</button>
     </form>
-    <h4 id="underMassage">Пример: https://lorem-rss.hexlet.app/feed</h4>
+    <h4 id="underMessage" class="under-message">Пример: https://lorem-rss.hexlet.app/feed</h4>
+  </div>
+
     <h1 id="postsTitle" style="display: none">Посты</h1>
     <ul style="list-style-type: none;" id="postList">
 
     </ul>
     <div style="display: none;" id="modal" class="modal">
         <div class="modal-content">
-          <h3 id="titleContent"></h3>
-          <p id="descriptionContent"></p>
-          <form id="seeMore">
-            <button type="submit">Читать полностью</button>
-          </form>
-          <button class="close">Закрыть</button>
+          <div class="modal-header">
+            <h5 id="titleContent"></h5>
+          </div>
+          <div class="modal-center">
+            <p id="descriptionContent"></p>
+          </div>
+          <div class="modal-footer">
+            <form id="seeMore">
+              <button class="btn seemore-btn" type="submit">Читать полностью</button>
+            </form>
+            <button class="close btn">Закрыть</button>
+          </div>
         </div>
       </div>
     <script src="./src/index.js"></script>

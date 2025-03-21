@@ -13,7 +13,6 @@
   },
   "license": "ISC",
   "author": "",
-  "type": "module",
   "main": "webpack.config.js",
   "scripts": {
     "start": "webpack serve --mode development",
@@ -220,7 +219,7 @@
     "safe-buffer": "^5.2.1",
     "safe-push-apply": "^1.0.0",
     "safe-regex-test": "^1.1.0",
-    "sass": "^1.85.1",
+    "sass": "^1.32.13",
     "schema-utils": "^4.3.0",
     "semver": "^6.3.1",
     "serialize-javascript": "^6.0.2",
