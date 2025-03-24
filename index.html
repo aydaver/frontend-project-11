@@ -3,49 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Создание RSS потока</title>
+    <title>AydaverRSS</title>
     <link rel="stylesheet" href="./src/styles.scss">
+    <link rel="icon" type="image/svg+xml" href="./src/icons/rss-color-svgrepo-com.svg">
 </head>
-<body>
-  <div class="header">
-    <h1 class="main-title">RSS агрегатор</h1>
-    <h4 class="main-description">Начните читать RSS сегодня! Это легко, это красиво.</h4>
-    <form id="form" class="main-form">
-        <input class="form-control w-100" placeholder="Ссылка RSS" type="text" id="url">
-        <button class="add-btn btn" type="submit" id="add-item">Добавить</button>
-    </form>
-    <h4 id="underMessage" class="under-message">Пример: https://lorem-rss.hexlet.app/feed</h4>
-  </div>
-  <div class="footer">
-    <div class="posts">
-      <h4 id="postsTitle" class="post-title" style="display: none">Посты</h4>
-      <ul style="list-style-type: none;" id="postList" class="post-list">
-
-      </ul>
-      <div style="display: none;" id="modal" class="modal">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 id="titleContent"></h5>
-          </div>
-          <div class="modal-center">
-            <p id="descriptionContent"></p>
-          </div>
-          <div class="modal-footer">
-            <form id="seeMore">
-              <button class="btn seemore-btn" type="submit">Читать полностью</button>
-            </form>
-            <button class="close btn">Закрыть</button>
-          </div>
+<body class="d-flex flex-column min-vh-100" style>
+  <div id="modal" class="modal fade" role="dialog" aria-labelledby="modal" aria-hidden="true" tabindex="-1" style="display: none">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="titleContent"></h5>
+        </div>
+        <div class="modal-body text-break">
+          <p id="descriptionContent"></p>
+        </div>
+        <div class="modal-footer">
+          <form id="seeMore">
+            <button class="btn btn-primary full-article" type="submit">Читать полностью</button>
+          </form>
+          <button class="btn btn-secondary close">Закрыть</button>
         </div>
       </div>
     </div>
-    <div class="feeds" id="feedsTitle" style="display: none;">
-      <h4 class="feeds-title">Фиды</h4>
-      <ul id="feedsList" class="feeds-list">
-
-      </ul>
-    </div>
   </div>
+  <main class="flex-grow-1">
+    <section class="container-fluid bg-dark p-5">
+      <div class="row">
+        <div class="col-md-10 col-lg-8 mx-auto text-white">
+          <h1 class="display-3 mb-0">RSS агрегатор</h1>
+          <p class="lead">Начните читать RSS сегодня! Это легко, это красиво.</p>
+          <form id="form" action class="rss-form text-body">
+            <div class="row">
+              <div class="col">
+                <div class="form-floating">
+                  <input class="form-control w-100" placeholder="Ссылка RSS" type="text" id="url" aria-label="url">
+                  <label for="url-input">Ссылка RSS</label>
+                </div>
+              </div>
+              <div class="col-auto">
+                <button class="h-100 btn btn-lg btn-primary px-sm-5" type="submit" id="add-item" aria-label="add">Добавить</button>
+              </div>
+            </div> 
+          </form>
+          <p id="underMessage" class="under-message mt-2 mb-0">Пример: https://lorem-rss.hexlet.app/feed</p>
+        </div>
+      </div>
+    </section>
+    <section class="container-fluid container-xxl p-5">
+      <div class="row">
+        <div class="col-md-10 col-lg-8 order-1 mx-auto posts">
+          <div class="card border-0">
+            <div class="card-body">
+              <h2 id="postsTitle" class="card-title h4" style="display: none">Посты</h2>
+            </div>
+            <ul id="postList" class="list-group border-0 rounded-0">
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-10 col-lg-4 mx-auto order-0 order-lg-1 feeds">
+          <div class="card border-0" id="feedsTitle" style="display: none;">
+            <div class="card-body">
+              <h4 class="card-title h4">Фиды</h4>
+            </div>
+            <ul id="feedsList" class="list-group border-0 rounded-0">
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
     <script src="./src/index.js"></script>
 </body>
 </html>

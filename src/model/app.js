@@ -105,17 +105,26 @@ export default document.addEventListener('DOMContentLoaded', () => {
           const error = response.data.status.error.name;
           const p = document.getElementById('underMessage');
           p.textContent = `${messages.connectionError} ${error}`;
-          p.style.color = 'red';
+          p.classList.add('text-danger');
           setTimeout(() => {
             p.textContent = messages.exampleUrl;
             p.style.color = 'white';
+          }, 5000);
+        } else if (response.data.status.http_code === 404) {
+          const p = document.getElementById('underMessage');
+          p.textContent = `${messages.connectionError}: 404 Not Found`;
+          p.classList.add('text-danger');
+          setTimeout(() => {
+            p.textContent = messages.exampleUrl;
+            p.classList.remove('text-danger');
           }, 5000);
         } else {
           const p = document.getElementById('underMessage');
           const postsTitle = document.getElementById('postsTitle');
           const feedsTitle = document.getElementById('feedsTitle');
           p.textContent = messages.successAdd;
-          p.style.color = 'green';
+          p.classList.add('text-success');
+          console.log(response.data);
           feedsTitle.style.display = 'block';
           postsTitle.style.display = 'block';
         }
@@ -123,7 +132,9 @@ export default document.addEventListener('DOMContentLoaded', () => {
         if (rssArray.includes(input.value)) {
           const p = document.getElementById('underMessage');
           p.textContent = messages.rssAdded;
-          p.style.color = 'red';
+          p.classList.add('text-danger');
+          p.classList.remove('text-success');
+          input.classList.add('is-invalid');
           checkForUpdate(input.value, itemArray);
         } else if (!rssArray.includes(input.value)) {
           items.forEach((item, index) => {
