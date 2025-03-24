@@ -7,8 +7,8 @@ import {
   validate,
   addNewItemToPage,
   createFeed,
-} from './view.js';
-import messages from './locales/ru.js';
+} from '../view/view.js';
+import messages from '../locales/ru.js';
 
 const getProxy = (url) => {
   const proxy = new URL('/get', 'https://allorigins.hexlet.app');

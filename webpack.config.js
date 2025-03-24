@@ -2,6 +2,11 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  performance: {
+    maxAssetSize: 500000,
+    maxEntrypointSize: 500000,
+  },
+  mode: 'production',
   entry: './src/index.js',
   output: {
     filename: 'bundle.js',

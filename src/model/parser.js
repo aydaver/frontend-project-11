@@ -1,4 +1,4 @@
-import messages from './locales/ru.js';
+import messages from '../locales/ru.js';
 
 export default (xml) => {
   try {

@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import messages from './locales/ru.js';
+import messages from '../locales/ru.js';
 
 const validate = (isValid, input) => {
   if (isValid === true) {
