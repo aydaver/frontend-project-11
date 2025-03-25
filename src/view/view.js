@@ -23,7 +23,7 @@ const modalWindow = (title, description, link) => {
   const modal = document.querySelector('#modal');
   const close = document.querySelector('.close');
   const seeMore = document.getElementById('seeMore');
-  seeMore.action = link;
+  seeMore.querySelector('a').href = link;
   const titleContent = document.getElementById('titleContent');
   titleContent.textContent = title;
   const descriptionContent = document.getElementById('descriptionContent');
