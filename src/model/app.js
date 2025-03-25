@@ -92,7 +92,7 @@ export default document.addEventListener('DOMContentLoaded', () => {
                   p.style.color = 'white';
                 }, 5000);
               } else if (doc.lastChild.localName === 'parsererror') {
-                p.textContent = `${messages.connectionError} Wrong URL`;
+                p.textContent = messages.noValid;
                 p.classList.add('text-danger');
                 input.classList.add('is-invalid');
               } else {
