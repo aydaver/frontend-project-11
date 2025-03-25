@@ -84,22 +84,21 @@ export default document.addEventListener('DOMContentLoaded', () => {
               const p = document.getElementById('underMessage');
               console.log(doc);
               if (response.data.status.error !== undefined) {
-                const error = response.data.status.error.name;
-                p.textContent = `${messages.connectionError} ${error}`;
-                p.classList.add('text-danger');
+                p.textContent = messages.connectionError;
+                p.classList.add('text-danger', 'visible');
                 setTimeout(() => {
                   p.textContent = messages.exampleUrl;
                   p.style.color = 'white';
                 }, 5000);
               } else if (doc.lastChild.localName === 'parsererror') {
                 p.textContent = messages.noValid;
-                p.classList.add('text-danger');
+                p.classList.add('text-danger', 'visible');
                 input.classList.add('is-invalid');
               } else {
                 const postsTitle = document.getElementById('postsTitle');
                 const feedsTitle = document.getElementById('feedsTitle');
                 p.textContent = messages.successAdd;
-                p.classList.add('text-success');
+                p.classList.add('text-success', 'visible');
                 p.classList.remove('text-danger');
                 input.classList.remove('is-invalid');
                 feedsTitle.style.display = 'block';

@@ -1,7 +1,7 @@
 export default {
   urlValidate: 'Ссылка должна быть валидным URL',
   rssAdded: 'RSS уже существует',
-  connectionError: 'Ошибка подключения:',
+  connectionError: 'Ошибка сети',
   successAdd: 'RSS успешно загружен',
   exampleUrl: 'Пример: https://lorem-rss.hexlet.app/feed',
   parsingError: 'Ошибка парсинга:',
