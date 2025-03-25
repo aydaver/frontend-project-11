@@ -78,9 +78,9 @@ export default document.addEventListener('DOMContentLoaded', () => {
   const rssArray = [];
 
   const button = document.getElementById('add-item');
-  button.addEventListener('click', () => {
+  button.onclick = () => {
     console.log('boobs');
-  })
+  };
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -129,7 +129,6 @@ export default document.addEventListener('DOMContentLoaded', () => {
           const feedsTitle = document.getElementById('feedsTitle');
           p.textContent = messages.successAdd;
           p.classList.add('text-success');
-          console.log(response.data);
           feedsTitle.style.display = 'block';
           postsTitle.style.display = 'block';
         }
