@@ -25,18 +25,7 @@ const checkForUpdate = (url, itemArray) => {
       .then((response) => {
         const newDoc = parseToDoc(response.data.contents);
         const newItems = newDoc.querySelectorAll('item');
-        const newTitles = newDoc.querySelectorAll('title');
-        newTitles.forEach((titleItem) => {
-          titleItem.id = `title${titleItem.parentElement.id}`;
-        });
-        const newDescriptions = newDoc.querySelectorAll('description');
-        newDescriptions.forEach((descriptionItem) => {
-          descriptionItem.id = `description${descriptionItem.parentElement.id}`;
-        });
-        const newLinks = newDoc.querySelectorAll('link');
-        newLinks.forEach((linkItem) => {
-          linkItem.id = `link${linkItem.parentElement.id}`;
-        });
+
         const resultArr = [];
         newItems.forEach((item) => {
           itemArray.forEach((arrayItem) => {
@@ -90,17 +79,7 @@ export default document.addEventListener('DOMContentLoaded', () => {
         const items = doc.querySelectorAll('item');
         const itemArray = [];
         const titles = doc.querySelectorAll('title');
-        titles.forEach((titleItem) => {
-          titleItem.id = `title${titleItem.parentElement.id}`;
-        });
         const descriptions = doc.querySelectorAll('description');
-        descriptions.forEach((descriptionItem) => {
-          descriptionItem.id = `description${descriptionItem.parentElement.id}`;
-        });
-        const links = doc.querySelectorAll('link');
-        links.forEach((linkItem) => {
-          linkItem.id = `link${linkItem.parentElement.id}`;
-        });
         if (response.data.status.error !== undefined) {
           const error = response.data.status.error.name;
           const p = document.getElementById('underMessage');
