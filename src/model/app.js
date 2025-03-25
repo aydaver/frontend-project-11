@@ -77,11 +77,6 @@ export default document.addEventListener('DOMContentLoaded', () => {
 
   const rssArray = [];
 
-  const button = document.getElementById('add-item');
-  button.onclick = () => {
-    console.log('boobs');
-  };
-
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const obj = { url: input.value };

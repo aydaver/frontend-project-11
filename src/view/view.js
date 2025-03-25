@@ -61,6 +61,15 @@ const modalWindow = (title, description, link) => {
   };
 };
 
+const buttonClick = (button, title, description, link, a) => {
+  button.addEventListener('click', () => {
+    modalWindow(title.textContent, description.textContent, link.textContent);
+    a.classList.add('fw-normal');
+    a.classList.add('link-secondary');
+    a.classList.remove('fw-bold');
+  });
+};
+
 const addListToPage = (doc, container) => {
   let items = doc.querySelectorAll('item');
   items = [...items];
@@ -82,12 +91,7 @@ const addListToPage = (doc, container) => {
     const link = item.querySelector('link');
     const title = item.querySelector('title');
     a.classList.add('fw-bold');
-    button.addEventListener('click', () => {
-      modalWindow(title.textContent, description.textContent, link.textContent);
-      a.classList.add('fw-normal');
-      a.classList.add('link-secondary');
-      a.classList.remove('fw-bold');
-    });
+    buttonClick(button, title, description, link, a);
     container.insertBefore(element, container.firstChild);
   });
 };
@@ -110,12 +114,7 @@ const addNewItemToPage = (item, container) => {
   const link = item.querySelector('link');
   const title = item.querySelector('title');
   a.classList.add('fw-bold');
-  button.addEventListener('click', () => {
-    modalWindow(title.textContent, description.textContent, link.textContent);
-    a.classList.add('fw-normal');
-    a.classList.add('link-secondary');
-    a.classList.remove('fw-bold');
-  });
+  buttonClick(button, title, description, link, a);
   container.insertBefore(element, container.firstChild);
 };
 
