@@ -72,57 +72,57 @@ export default document.addEventListener('DOMContentLoaded', () => {
     scheme.isValid(obj)
       .then((result) => {
         validate(result, input);
-      });
-    getNewPost(getProxy(input.value))
-      .then((response) => {
-        const doc = parseToDoc(response.data.contents);
-        const items = doc.querySelectorAll('item');
-        const itemArray = [];
-        const titles = doc.querySelectorAll('title');
-        const descriptions = doc.querySelectorAll('description');
-        if (response.data.status.error !== undefined) {
-          const error = response.data.status.error.name;
-          const p = document.getElementById('underMessage');
-          p.textContent = `${messages.connectionError} ${error}`;
-          p.classList.add('text-danger');
-          setTimeout(() => {
-            p.textContent = messages.exampleUrl;
-            p.style.color = 'white';
-          }, 5000);
-        } else if (response.data.status.http_code === 404) {
-          const p = document.getElementById('underMessage');
-          p.textContent = `${messages.connectionError}: 404 Not Found`;
-          p.classList.add('text-danger');
-          setTimeout(() => {
-            p.textContent = messages.exampleUrl;
-            p.classList.remove('text-danger');
-          }, 5000);
-        } else {
-          const p = document.getElementById('underMessage');
-          const postsTitle = document.getElementById('postsTitle');
-          const feedsTitle = document.getElementById('feedsTitle');
-          p.textContent = messages.successAdd;
-          p.classList.add('text-success');
-          feedsTitle.style.display = 'block';
-          postsTitle.style.display = 'block';
-        }
-        const postList = document.getElementById('postList');
-        if (rssArray.includes(input.value)) {
-          const p = document.getElementById('underMessage');
-          p.textContent = messages.rssAdded;
-          p.classList.add('text-danger');
-          p.classList.remove('text-success');
-          input.classList.add('is-invalid');
-          checkForUpdate(input.value, itemArray);
-        } else if (!rssArray.includes(input.value)) {
-          items.forEach((item, index) => {
-            item.id = index;
-            itemArray.push(item);
-          });
-          addListToPage(doc, postList);
-          rssArray.push(input.value);
-          checkForUpdate(input.value, itemArray);
-          createFeed(titles, descriptions);
+        console.log(result);
+        if (result === true) {
+          getNewPost(getProxy(input.value))
+            .then((response) => {
+              const doc = parseToDoc(response.data.contents);
+              const items = doc.querySelectorAll('item');
+              const itemArray = [];
+              const titles = doc.querySelectorAll('title');
+              const descriptions = doc.querySelectorAll('description');
+              const p = document.getElementById('underMessage');
+              console.log(doc);
+              if (response.data.status.error !== undefined) {
+                const error = response.data.status.error.name;
+                p.textContent = `${messages.connectionError} ${error}`;
+                p.classList.add('text-danger');
+                setTimeout(() => {
+                  p.textContent = messages.exampleUrl;
+                  p.style.color = 'white';
+                }, 5000);
+              } else if (doc.lastChild.localName === 'parsererror') {
+                p.textContent = `${messages.connectionError} Wrong URL`;
+                p.classList.add('text-danger');
+                input.classList.add('is-invalid');
+              } else {
+                const postsTitle = document.getElementById('postsTitle');
+                const feedsTitle = document.getElementById('feedsTitle');
+                p.textContent = messages.successAdd;
+                p.classList.add('text-success');
+                p.classList.remove('text-danger');
+                input.classList.remove('is-invalid');
+                feedsTitle.style.display = 'block';
+                postsTitle.style.display = 'block';
+                const postList = document.getElementById('postList');
+                if (rssArray.includes(input.value)) {
+                  p.textContent = messages.rssAdded;
+                  p.classList.add('text-danger');
+                  p.classList.remove('text-success');
+                  input.classList.add('is-invalid');
+                  checkForUpdate(input.value, itemArray);
+                } else if (!rssArray.includes(input.value)) {
+                  items.forEach((item, index) => {
+                    item.id = index;
+                    itemArray.push(item);
+                  });
+                  addListToPage(doc, postList);
+                  rssArray.push(input.value);
+                  checkForUpdate(input.value, itemArray);
+                  createFeed(titles, descriptions);
+                }
+              }
+            });
         }
       });
   });

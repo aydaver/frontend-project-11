@@ -6,16 +6,15 @@ const validate = (isValid, input) => {
     input.style.border = null;
     const p = document.getElementById('underMessage');
     p.classList.remove('text-danger', 'text-success');
-    p.style.color = 'white';
     p.textContent = 'Подключение...';
-  } else if (isValid === false) {
-    input.style.border = 'solid red';
+  } else {
     const p = document.getElementById('underMessage');
     p.textContent = messages.urlValidate;
-    p.style.color = 'red';
+    p.classList.add('text-danger');
+    input.classList.add('is-invalid');
     setTimeout(() => {
       p.textContent = messages.exampleUrl;
-      p.style.color = 'white';
+      p.classList.remove('text-danger', 'text-success');
     }, 5000);
   }
 };

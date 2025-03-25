@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
+    "@vercel/speed-insights": "^1.2.0",
     "axios": "^1.7.9",
     "i18next": "^24.2.2",
     "lodash": "^4.17.21",
