@@ -81,7 +81,8 @@ export default form.addEventListener('submit', (e) => {
             const titles = doc.querySelectorAll('title');
             const descriptions = doc.querySelectorAll('description');
             const p = document.getElementById('underMessage');
-            if (Object.prototype.hasOwnProperty.call(response.data.status, 'error') && response.data.status.error !== undefined) {
+            if (Object.prototype.hasOwnProperty.call(response.data.status, 'error')
+            && response.data.status.error !== undefined && input.value !== '') {
               p.textContent = messages.connectionError;
               p.classList.add('text-danger', 'visible');
               input.classList.add('is-invalid');
