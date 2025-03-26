@@ -79,7 +79,7 @@ export default form.addEventListener('submit', (e) => {
             const titles = doc.querySelectorAll('title');
             const descriptions = doc.querySelectorAll('description');
             const p = document.getElementById('underMessage');
-            if (doc.lastChild.localName === 'parsererror') {
+            if (doc.querySelector('*').textContent.includes('<parsererror>')) {
               p.textContent = messages.noValid;
               p.classList.add('text-danger', 'visible');
               input.classList.add('is-invalid');
