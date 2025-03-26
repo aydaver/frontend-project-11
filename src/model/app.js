@@ -80,9 +80,8 @@ export default form.addEventListener('submit', (e) => {
             const titles = doc.querySelectorAll('title');
             const descriptions = doc.querySelectorAll('description');
             const p = document.getElementById('underMessage');
-            console.log(doc);
-            console.log(response.data);
-            if (response.data.status.error) {
+            const { error } = response.data.status;
+            if (error !== undefined) {
               p.textContent = messages.connectionError;
               console.log('boobs');
               p.classList.add('text-danger', 'visible');
