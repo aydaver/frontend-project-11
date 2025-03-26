@@ -80,17 +80,7 @@ export default form.addEventListener('submit', (e) => {
             const titles = doc.querySelectorAll('title');
             const descriptions = doc.querySelectorAll('description');
             const p = document.getElementById('underMessage');
-            const { status } = response.data.status;
-            console.log(status);
-            if (Object.hasOwn(status, 'error')) {
-              p.textContent = messages.connectionError;
-              console.log('boobs');
-              p.classList.add('text-danger', 'visible');
-              setTimeout(() => {
-                p.textContent = messages.exampleUrl;
-                p.classList.remove('text-danger');
-              }, 5000);
-            } else if (doc.lastChild.localName === 'parsererror') {
+            if (doc.lastChild.localName === 'parsererror') {
               p.textContent = messages.noValid;
               p.classList.add('text-danger', 'visible');
               input.classList.add('is-invalid');
