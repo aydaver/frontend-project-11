@@ -67,6 +67,7 @@ const rssArray = [];
 
 export default form.addEventListener('submit', (e) => {
   e.preventDefault();
+  console.log('boobs');
   const obj = { url: input.value };
   scheme.isValid(obj)
     .then((result) => {
@@ -74,12 +75,17 @@ export default form.addEventListener('submit', (e) => {
         getNewPost(getProxy(input.value))
           .then((response) => {
             const doc = parseToDoc(response.data.contents);
+            console.log(doc);
             const items = doc.querySelectorAll('item');
             const itemArray = [];
             const titles = doc.querySelectorAll('title');
             const descriptions = doc.querySelectorAll('description');
             const p = document.getElementById('underMessage');
             if (doc.querySelector('*').textContent.includes('<parsererror>')) {
+              p.textContent = messages.connectionError;
+              p.classList.add('text-danger', 'visible');
+              input.classList.add('is-invalid');
+            } else if (doc.documentElement.outerHTML.startsWith('<parsererror')) {
               p.textContent = messages.noValid;
               p.classList.add('text-danger', 'visible');
               input.classList.add('is-invalid');
