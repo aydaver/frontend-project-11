@@ -57,73 +57,71 @@ const checkForUpdate = (url, itemArray) => {
   );
 };
 
-export default document.addEventListener('DOMContentLoaded', () => {
-  const scheme = yup.object({
-    url: yup.string().url(),
-  });
-  const form = document.getElementById('form');
-  const input = document.querySelector('input');
+const scheme = yup.object({
+  url: yup.string().url(),
+});
+const form = document.getElementById('form');
+const input = document.querySelector('input');
 
-  const rssArray = [];
+const rssArray = [];
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const obj = { url: input.value };
-    scheme.isValid(obj)
-      .then((result) => {
-        validate(result, input);
-        console.log(result);
-        if (result === true) {
-          getNewPost(getProxy(input.value))
-            .then((response) => {
-              const doc = parseToDoc(response.data.contents);
-              const items = doc.querySelectorAll('item');
-              const itemArray = [];
-              const titles = doc.querySelectorAll('title');
-              const descriptions = doc.querySelectorAll('description');
-              const p = document.getElementById('underMessage');
-              console.log(doc);
-              // eslint-disable-next-line no-prototype-builtins
-              if (response.data.status.hasOwnProperty('error')) {
-                p.textContent = messages.connectionError;
-                p.classList.add('text-danger', 'visible');
-                setTimeout(() => {
-                  p.textContent = messages.exampleUrl;
-                  p.classList.remove('text-danger');
-                }, 5000);
-              } else if (doc.lastChild.localName === 'parsererror') {
-                p.textContent = messages.noValid;
-                p.classList.add('text-danger', 'visible');
-                input.classList.add('is-invalid');
-              } else {
-                const postsTitle = document.getElementById('postsTitle');
-                const feedsTitle = document.getElementById('feedsTitle');
-                p.textContent = messages.successAdd;
-                p.classList.add('text-success', 'visible');
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const obj = { url: input.value };
+  scheme.isValid(obj)
+    .then((result) => {
+      validate(result, input);
+      console.log(result);
+      if (result === true) {
+        getNewPost(getProxy(input.value))
+          .then((response) => {
+            const doc = parseToDoc(response.data.contents);
+            const items = doc.querySelectorAll('item');
+            const itemArray = [];
+            const titles = doc.querySelectorAll('title');
+            const descriptions = doc.querySelectorAll('description');
+            const p = document.getElementById('underMessage');
+            console.log(doc);
+            // eslint-disable-next-line no-prototype-builtins
+            if (response.data.status.hasOwnProperty('error')) {
+              p.textContent = messages.connectionError;
+              p.classList.add('text-danger', 'visible');
+              setTimeout(() => {
+                p.textContent = messages.exampleUrl;
                 p.classList.remove('text-danger');
-                input.classList.remove('is-invalid');
-                feedsTitle.style.display = 'block';
-                postsTitle.style.display = 'block';
-                const postList = document.getElementById('postList');
-                if (rssArray.includes(input.value)) {
-                  p.textContent = messages.rssAdded;
-                  p.classList.add('text-danger');
-                  p.classList.remove('text-success');
-                  input.classList.add('is-invalid');
-                  checkForUpdate(input.value, itemArray);
-                } else if (!rssArray.includes(input.value)) {
-                  items.forEach((item, index) => {
-                    item.id = index;
-                    itemArray.push(item);
-                  });
-                  addListToPage(doc, postList);
-                  rssArray.push(input.value);
-                  checkForUpdate(input.value, itemArray);
-                  createFeed(titles, descriptions);
-                }
+              }, 5000);
+            } else if (doc.lastChild.localName === 'parsererror') {
+              p.textContent = messages.noValid;
+              p.classList.add('text-danger', 'visible');
+              input.classList.add('is-invalid');
+            } else {
+              const postsTitle = document.getElementById('postsTitle');
+              const feedsTitle = document.getElementById('feedsTitle');
+              p.textContent = messages.successAdd;
+              p.classList.add('text-success', 'visible');
+              p.classList.remove('text-danger');
+              input.classList.remove('is-invalid');
+              feedsTitle.style.display = 'block';
+              postsTitle.style.display = 'block';
+              const postList = document.getElementById('postList');
+              if (rssArray.includes(input.value)) {
+                p.textContent = messages.rssAdded;
+                p.classList.add('text-danger');
+                p.classList.remove('text-success');
+                input.classList.add('is-invalid');
+                checkForUpdate(input.value, itemArray);
+              } else if (!rssArray.includes(input.value)) {
+                items.forEach((item, index) => {
+                  item.id = index;
+                  itemArray.push(item);
+                });
+                addListToPage(doc, postList);
+                rssArray.push(input.value);
+                checkForUpdate(input.value, itemArray);
+                createFeed(titles, descriptions);
               }
-            });
-        }
-      });
-  });
+            }
+          });
+      }
+    });
 });
