@@ -73,56 +73,49 @@ export default form.addEventListener('submit', (e) => {
       if (result === true && input.value.trim() !== '') {
         getNewPost(getProxy(input.value))
           .then((response) => {
-            if (response.data.status.error !== undefined) {
-              const doc = parseToDoc(response.data.contents);
-              const items = doc.querySelectorAll('item');
-              const itemArray = [];
-              const titles = doc.querySelectorAll('title');
-              const descriptions = doc.querySelectorAll('description');
-              const p = document.getElementById('underMessage');
-              if (!doc.documentElement.outerHTML.startsWith('<rss')) {
-                p.textContent = messages.noValid;
-                p.classList.add('text-danger', 'visible');
-                input.classList.add('is-invalid');
-                input.value = '';
-              } else if (doc.documentElement.outerHTML.startsWith('<parsererror')) {
-                p.textContent = messages.noValid;
-                p.classList.add('text-danger', 'visible');
-                input.classList.add('is-invalid');
-                input.value = '';
-              } else {
-                const postsTitle = document.getElementById('postsTitle');
-                const feedsTitle = document.getElementById('feedsTitle');
-                p.textContent = messages.successAdd;
-                p.classList.add('text-success', 'visible');
-                p.classList.remove('text-danger');
-                input.classList.remove('is-invalid');
-                feedsTitle.style.display = 'block';
-                postsTitle.style.display = 'block';
-                const postList = document.getElementById('postList');
-                if (rssArray.includes(input.value)) {
-                  p.textContent = messages.rssAdded;
-                  p.classList.add('text-danger');
-                  p.classList.remove('text-success');
-                  input.classList.add('is-invalid');
-                  checkForUpdate(input.value, itemArray);
-                } else if (!rssArray.includes(input.value)) {
-                  items.forEach((item, index) => {
-                    item.id = index;
-                    itemArray.push(item);
-                  });
-                  addListToPage(doc, postList);
-                  rssArray.push(input.value);
-                  checkForUpdate(input.value, itemArray);
-                  createFeed(titles, descriptions);
-                }
-                input.value = '';
-              }
-            } else {
-              const p = document.getElementById('underMessage');
-              p.textContent = messages.connectionError;
-              p.classList.add('text-danger');
+            const doc = parseToDoc(response.data.contents);
+            const items = doc.querySelectorAll('item');
+            const itemArray = [];
+            const titles = doc.querySelectorAll('title');
+            const descriptions = doc.querySelectorAll('description');
+            const p = document.getElementById('underMessage');
+            if (!doc.documentElement.outerHTML.startsWith('<rss')) {
+              p.textContent = messages.noValid;
+              p.classList.add('text-danger', 'visible');
               input.classList.add('is-invalid');
+              input.value = '';
+            } else if (doc.documentElement.outerHTML.startsWith('<parsererror')) {
+              p.textContent = messages.noValid;
+              p.classList.add('text-danger', 'visible');
+              input.classList.add('is-invalid');
+              input.value = '';
+            } else {
+              const postsTitle = document.getElementById('postsTitle');
+              const feedsTitle = document.getElementById('feedsTitle');
+              p.textContent = messages.successAdd;
+              p.classList.add('text-success', 'visible');
+              p.classList.remove('text-danger');
+              input.classList.remove('is-invalid');
+              feedsTitle.style.display = 'block';
+              postsTitle.style.display = 'block';
+              const postList = document.getElementById('postList');
+              if (rssArray.includes(input.value)) {
+                p.textContent = messages.rssAdded;
+                p.classList.add('text-danger');
+                p.classList.remove('text-success');
+                input.classList.add('is-invalid');
+                checkForUpdate(input.value, itemArray);
+              } else if (!rssArray.includes(input.value)) {
+                items.forEach((item, index) => {
+                  item.id = index;
+                  itemArray.push(item);
+                });
+                addListToPage(doc, postList);
+                rssArray.push(input.value);
+                checkForUpdate(input.value, itemArray);
+                createFeed(titles, descriptions);
+              }
+              input.value = '';
             }
           });
       } else {
