@@ -79,6 +79,7 @@ export default form.addEventListener('submit', (e) => {
             const titles = doc.querySelectorAll('title');
             const descriptions = doc.querySelectorAll('description');
             const p = document.getElementById('underMessage');
+            alert(response.data.status);
             if (Object.prototype.hasOwnProperty.call(response.data.status, 'error')
             && Object.prototype.hasOwnProperty.call(response.data.status.error, 'name')
             && response.data.status.error !== undefined && input.value !== '') {
