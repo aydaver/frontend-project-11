@@ -71,7 +71,6 @@ export default form.addEventListener('submit', (e) => {
   scheme.isValid(obj)
     .then((result) => {
       validate(result, input);
-      console.log(result);
       if (result === true) {
         getNewPost(getProxy(input.value))
           .then((response) => {
@@ -85,6 +84,7 @@ export default form.addEventListener('submit', (e) => {
             // eslint-disable-next-line no-prototype-builtins
             if (response.data.status.hasOwnProperty('error')) {
               p.textContent = messages.connectionError;
+              console.log('boobs');
               p.classList.add('text-danger', 'visible');
               setTimeout(() => {
                 p.textContent = messages.exampleUrl;
