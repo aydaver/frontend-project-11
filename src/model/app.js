@@ -17,7 +17,14 @@ const getProxy = (url) => {
   return proxy.toString();
 };
 
-const getNewPost = (url) => axios.get(url);
+const getNewPost = (url) => axios.get(url).catch(() => {
+  const p = document.getElementById('underMessage');
+  const input = document.querySelector('input');
+  p.textContent = messages.rssAdded;
+  p.classList.add('text-danger');
+  p.classList.remove('text-success');
+  input.classList.add('is-invalid');
+});
 
 const checkForUpdate = (url, itemArray) => {
   setTimeout(
