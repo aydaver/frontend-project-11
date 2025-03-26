@@ -70,7 +70,6 @@ export default form.addEventListener('submit', (e) => {
   const obj = { url: input.value };
   scheme.isValid(obj)
     .then((result) => {
-      validate(result, input);
       if (result === true) {
         getNewPost(getProxy(input.value))
           .then((response) => {
@@ -113,6 +112,8 @@ export default form.addEventListener('submit', (e) => {
             }
             input.value = '';
           });
+      } else {
+        validate(result, input);
       }
     });
 });

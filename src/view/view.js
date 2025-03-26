@@ -3,7 +3,6 @@ import messages from '../locales/ru.js';
 
 const validate = (isValid, input) => {
   if (isValid === true) {
-    input.style.border = null;
     const p = document.getElementById('underMessage');
     p.classList.remove('text-danger', 'text-success');
     p.textContent = 'Подключение...';
