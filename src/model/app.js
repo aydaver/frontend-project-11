@@ -80,8 +80,10 @@ export default form.addEventListener('submit', (e) => {
             const titles = doc.querySelectorAll('title');
             const descriptions = doc.querySelectorAll('description');
             const p = document.getElementById('underMessage');
-            const { error } = response.data.status;
-            if (error !== undefined) {
+            // eslint-disable-next-line prefer-destructuring
+            const status = response.data.status;
+            console.log(status);
+            if (Object.hasOwn(status, 'error')) {
               p.textContent = messages.connectionError;
               console.log('boobs');
               p.classList.add('text-danger', 'visible');
