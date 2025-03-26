@@ -70,18 +70,17 @@ export default form.addEventListener('submit', (e) => {
   const obj = { url: input.value };
   scheme.isValid(obj)
     .then((result) => {
-      if (result === true) {
+      if (result === true && input.value.trim() !== '') {
         getNewPost(getProxy(input.value))
           .then((response) => {
             const doc = parseToDoc(response.data.contents);
-            console.log(response);
-            console.log(doc);
             const items = doc.querySelectorAll('item');
             const itemArray = [];
             const titles = doc.querySelectorAll('title');
             const descriptions = doc.querySelectorAll('description');
             const p = document.getElementById('underMessage');
             if (Object.prototype.hasOwnProperty.call(response.data.status, 'error')
+            && Object.prototype.hasOwnProperty.call(response.data.status.error, 'name')
             && response.data.status.error !== undefined && input.value !== '') {
               p.textContent = messages.connectionError;
               p.classList.add('text-danger', 'visible');
@@ -90,10 +89,12 @@ export default form.addEventListener('submit', (e) => {
               p.textContent = messages.noValid;
               p.classList.add('text-danger', 'visible');
               input.classList.add('is-invalid');
+              input.value = '';
             } else if (doc.documentElement.outerHTML.startsWith('<parsererror')) {
               p.textContent = messages.noValid;
               p.classList.add('text-danger', 'visible');
               input.classList.add('is-invalid');
+              input.value = '';
             } else {
               const postsTitle = document.getElementById('postsTitle');
               const feedsTitle = document.getElementById('feedsTitle');
@@ -120,11 +121,11 @@ export default form.addEventListener('submit', (e) => {
                 checkForUpdate(input.value, itemArray);
                 createFeed(titles, descriptions);
               }
+              input.value = '';
             }
           });
       } else {
         validate(result, input);
       }
-      input.value = '';
     });
 });

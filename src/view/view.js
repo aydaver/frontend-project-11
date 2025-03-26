@@ -2,12 +2,20 @@
 import messages from '../locales/ru.js';
 
 const validate = (isValid, input) => {
+  const p = document.getElementById('underMessage');
   if (isValid === true) {
-    const p = document.getElementById('underMessage');
     p.classList.remove('text-danger', 'text-success');
     p.textContent = 'Подключение...';
+    if (input.value.trim() === '') {
+      p.textContent = messages.empty;
+      p.classList.add('text-danger');
+      input.classList.add('is-invalid');
+      setTimeout(() => {
+        p.textContent = messages.exampleUrl;
+        p.classList.remove('text-danger', 'text-success');
+      }, 5000);
+    }
   } else {
-    const p = document.getElementById('underMessage');
     p.textContent = messages.urlValidate;
     p.classList.add('text-danger');
     input.classList.add('is-invalid');

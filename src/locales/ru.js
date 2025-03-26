@@ -6,4 +6,5 @@ export default {
   exampleUrl: 'Пример: https://lorem-rss.hexlet.app/feed',
   parsingError: 'Ошибка парсинга',
   noValid: 'Ресурс не содержит валидный RSS',
+  empty: 'Не должно быть пустым',
 };
