@@ -81,8 +81,8 @@ export default form.addEventListener('submit', (e) => {
             const descriptions = doc.querySelectorAll('description');
             const p = document.getElementById('underMessage');
             console.log(doc);
-            // eslint-disable-next-line no-prototype-builtins
-            if (response.data.status.hasOwnProperty('error')) {
+            console.log(response.data);
+            if (response.data.status.error) {
               p.textContent = messages.connectionError;
               console.log('boobs');
               p.classList.add('text-danger', 'visible');
