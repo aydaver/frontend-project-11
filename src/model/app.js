@@ -83,12 +83,12 @@ export default document.addEventListener('DOMContentLoaded', () => {
               const descriptions = doc.querySelectorAll('description');
               const p = document.getElementById('underMessage');
               console.log(doc);
-              if (response.data.status.error !== undefined) {
+              if (response.data.status.hasOwnProperty('error')) {
                 p.textContent = messages.connectionError;
                 p.classList.add('text-danger', 'visible');
                 setTimeout(() => {
                   p.textContent = messages.exampleUrl;
-                  p.style.color = 'white';
+                  p.classList.remove('text-danger');
                 }, 5000);
               } else if (doc.lastChild.localName === 'parsererror') {
                 p.textContent = messages.noValid;
