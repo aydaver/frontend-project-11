@@ -74,13 +74,18 @@ export default form.addEventListener('submit', (e) => {
         getNewPost(getProxy(input.value))
           .then((response) => {
             const doc = parseToDoc(response.data.contents);
+            console.log(response);
             console.log(doc);
             const items = doc.querySelectorAll('item');
             const itemArray = [];
             const titles = doc.querySelectorAll('title');
             const descriptions = doc.querySelectorAll('description');
             const p = document.getElementById('underMessage');
-            if (!doc.documentElement.outerHTML.startsWith('<rss')) {
+            if (response.data.status.error !== undefined) {
+              p.textContent = messages.connectionError;
+              p.classList.add('text-danger', 'visible');
+              input.classList.add('is-invalid');
+            } else if (!doc.documentElement.outerHTML.startsWith('<rss')) {
               p.textContent = messages.noValid;
               p.classList.add('text-danger', 'visible');
               input.classList.add('is-invalid');
