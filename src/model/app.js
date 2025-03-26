@@ -111,6 +111,7 @@ export default form.addEventListener('submit', (e) => {
                 createFeed(titles, descriptions);
               }
             }
+            input.value = '';
           });
       }
     });
