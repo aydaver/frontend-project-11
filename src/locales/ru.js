@@ -4,6 +4,6 @@ export default {
   connectionError: 'Ошибка сети',
   successAdd: 'RSS успешно загружен',
   exampleUrl: 'Пример: https://lorem-rss.hexlet.app/feed',
-  parsingError: 'Ошибка парсинга:',
+  parsingError: 'Ошибка парсинга',
   noValid: 'Ресурс не содержит валидный RSS',
 };

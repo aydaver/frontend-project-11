@@ -83,6 +83,7 @@ export default document.addEventListener('DOMContentLoaded', () => {
               const descriptions = doc.querySelectorAll('description');
               const p = document.getElementById('underMessage');
               console.log(doc);
+              // eslint-disable-next-line no-prototype-builtins
               if (response.data.status.hasOwnProperty('error')) {
                 p.textContent = messages.connectionError;
                 p.classList.add('text-danger', 'visible');
