@@ -80,7 +80,7 @@ export default form.addEventListener('submit', (e) => {
             const titles = doc.querySelectorAll('title');
             const descriptions = doc.querySelectorAll('description');
             const p = document.getElementById('underMessage');
-            if (!doc.querySelector('*').textContent.includes('<rss')) {
+            if (!doc.documentElement.outerHTML.startsWith('<rss')) {
               p.textContent = messages.noValid;
               p.classList.add('text-danger', 'visible');
               input.classList.add('is-invalid');
