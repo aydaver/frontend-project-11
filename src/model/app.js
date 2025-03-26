@@ -65,7 +65,7 @@ const input = document.querySelector('input');
 
 const rssArray = [];
 
-form.addEventListener('submit', (e) => {
+export default form.addEventListener('submit', (e) => {
   e.preventDefault();
   const obj = { url: input.value };
   scheme.isValid(obj)
