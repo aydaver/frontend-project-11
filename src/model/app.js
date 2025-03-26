@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import * as yup from 'yup';
 import axios from 'axios';
+import i18next from 'i18next';
 import parseToDoc from './parser.js';
 import {
   addListToPage,
@@ -8,7 +9,18 @@ import {
   addNewItemToPage,
   createFeed,
 } from '../view/view.js';
+
 import messages from '../locales/ru.js';
+
+await i18next.init({
+  lng: 'ru',
+  resources: {
+    ru: {
+      translation:
+        messages,
+    },
+  },
+});
 
 const getProxy = (url) => {
   const proxy = new URL('/get', 'https://allorigins.hexlet.app');
@@ -87,19 +99,19 @@ export default form.addEventListener('submit', (e) => {
             const descriptions = doc.querySelectorAll('description');
             const p = document.getElementById('underMessage');
             if (!doc.documentElement.outerHTML.startsWith('<rss')) {
-              p.textContent = messages.noValid;
+              p.textContent = i18next.t('noValid');
               p.classList.add('text-danger', 'visible');
               input.classList.add('is-invalid');
               input.value = '';
             } else if (doc.documentElement.outerHTML.startsWith('<parsererror')) {
-              p.textContent = messages.noValid;
+              p.textContent = i18next.t('noValid');
               p.classList.add('text-danger', 'visible');
               input.classList.add('is-invalid');
               input.value = '';
             } else {
               const postsTitle = document.getElementById('postsTitle');
               const feedsTitle = document.getElementById('feedsTitle');
-              p.textContent = messages.successAdd;
+              p.textContent = i18next.t('successAdd');
               p.classList.add('text-success', 'visible');
               p.classList.remove('text-danger');
               input.classList.remove('is-invalid');
@@ -107,7 +119,7 @@ export default form.addEventListener('submit', (e) => {
               postsTitle.style.display = 'block';
               const postList = document.getElementById('postList');
               if (rssArray.includes(input.value)) {
-                p.textContent = messages.rssAdded;
+                p.textContent = i18next.t('rssAdded');
                 p.classList.add('text-danger');
                 p.classList.remove('text-success');
                 input.classList.add('is-invalid');

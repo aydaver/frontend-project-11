@@ -1,5 +1,16 @@
 /* eslint-disable no-param-reassign */
+import i18next from 'i18next';
 import messages from '../locales/ru.js';
+
+await i18next.init({
+  lng: 'ru',
+  resources: {
+    ru: {
+      translation:
+        messages,
+    },
+  },
+});
 
 const validate = (isValid, input) => {
   const p = document.getElementById('underMessage');
@@ -7,20 +18,20 @@ const validate = (isValid, input) => {
     p.classList.remove('text-danger', 'text-success');
     p.textContent = 'Подключение...';
     if (input.value.trim() === '') {
-      p.textContent = messages.empty;
+      p.textContent = i18next.t('empty');
       p.classList.add('text-danger');
       input.classList.add('is-invalid');
       setTimeout(() => {
-        p.textContent = messages.exampleUrl;
+        p.textContent = i18next.t('exampleUrl');
         p.classList.remove('text-danger', 'text-success');
       }, 5000);
     }
   } else {
-    p.textContent = messages.urlValidate;
+    p.textContent = i18next.t('urlValidate');
     p.classList.add('text-danger');
     input.classList.add('is-invalid');
     setTimeout(() => {
-      p.textContent = messages.exampleUrl;
+      p.textContent = i18next.t('exampleUrl');
       p.classList.remove('text-danger', 'text-success');
     }, 5000);
   }
@@ -56,7 +67,7 @@ const modalWindow = (title, description, link) => {
     modalBackdrop.remove();
   };
 
-  window.onclick = (event) => {
+  body.onclick = (event) => {
     if (event.target === modal) {
       modal.style.display = 'none';
       modal.classList.remove('show');
