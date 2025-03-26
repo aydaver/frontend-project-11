@@ -119,5 +119,6 @@ export default form.addEventListener('submit', (e) => {
       } else {
         validate(result, input);
       }
+      input.value = '';
     });
 });
