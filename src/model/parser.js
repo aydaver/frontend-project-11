@@ -6,7 +6,6 @@ export default (xml) => {
     const doc = parser.parseFromString(xml, 'application/xml');
     return doc;
   } catch (error) {
-    console.error(messages.parsingError);
     const p = document.getElementById('underMessage');
     p.textContent = messages.parsingError;
     p.style.color = 'red';
