@@ -12,7 +12,7 @@
     "url": "git+https://github.com/aydaver/frontend-project-11.git"
   },
   "license": "ISC",
-  "author": "",
+  "author": "aydaver",
   "main": "webpack.config.js",
   "scripts": {
     "start": "webpack serve --mode development",
